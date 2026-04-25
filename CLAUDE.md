@@ -27,7 +27,9 @@ read `ARCHITECTURE.md` for the spec. read `QUALITY.md` for the gates. do not mod
    - note anything the next run should know in `## notes`
    - if blocked: create `### BLOCKED: P.N` section with full context, stop
 7. if you have context + time left, loop back to step 2 and pick the next task
-8. stop when: context < 20% remaining, or 3 consecutive task failures, or a BLOCKED marker is active
+8. **this session is metered.** the operator pays per-session, not per-task. do as many atomic tasks as physically fit. don't leave the table early.
+9. stop when: context < 10% remaining (was 20%, tightened — push harder), or 3 consecutive task failures, or a BLOCKED marker is active
+10. on tight context: finish current task fully + commit + push BEFORE starting another. never abandon mid-task. partial work uncommitted is wasted work.
 
 ## hard rules
 
@@ -58,9 +60,11 @@ read `ARCHITECTURE.md` for the spec. read `QUALITY.md` for the gates. do not mod
 
 ## context management
 
-- use Grep and Glob first to find relevant files — do not slurp the whole repo
-- read only the files needed for the current task
-- when tests or types reference other files, open those selectively
+- **NEVER Read a file you haven't first located via Grep/Glob.** blind reads waste context.
+- read only the files needed for the current task. close the loop, move on.
+- when tests or types reference other files, open those selectively, not preemptively.
+- per task: aim for ≤5 file reads. if you need more, your task is too big — split it.
+- per session: aim for 15-30 atomic tasks. previous sessions did 5-15; that was too cautious.
 
 ## when you are stuck
 
